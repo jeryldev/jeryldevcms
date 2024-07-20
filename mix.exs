@@ -9,7 +9,27 @@ defmodule Jeryldevcms.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        "coveralls.cobertura": :test,
+        "ghci.local": :test
+      ],
+      dialyzer: [
+        ignore_warnings: "dialyzer.ignore-warnings",
+        # Put the project-level PLT in the priv/ directory (instead of the default _build/ location)
+        plt_file: {:no_warn, "priv/plts/project.plt"}
+
+        # The above is equivalent to:
+        # plt_local_path: "priv/plts/project.plt"
+
+        # You could also put the core Erlang/Elixir PLT into the priv/ directory like so:
+        # plt_core_path: "priv/plts/core.plt"
+      ]
     ]
   end
 
@@ -58,7 +78,12 @@ defmodule Jeryldevcms.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:credo, "~> 1.7.7", only: [:dev, :test], runtime: false},
+      {:sobelow, "~> 0.13.0", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4.3", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.18.1", only: [:dev, :test], runtime: false},
+      {:mix_audit, "~> 2.1.4", only: [:dev, :test], runtime: false}
     ]
   end
 
@@ -80,6 +105,14 @@ defmodule Jeryldevcms.MixProject do
         "tailwind jeryldevcms --minify",
         "esbuild jeryldevcms --minify",
         "phx.digest"
+      ],
+      "ghci.local": [
+        "compile --warnings-as-errors",
+        "format --check-formatted",
+        "credo --strict",
+        "sobelow -i Config.HTTPS",
+        "dialyzer --format dialyzer",
+        "coveralls"
       ]
     ]
   end
