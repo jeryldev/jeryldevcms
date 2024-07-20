@@ -24,7 +24,9 @@ defmodule Jeryldevcms.Application do
            site: :jeryldev,
            repo: Jeryldevcms.Repo,
            endpoint: JeryldevcmsWeb.Endpoint,
-           router: JeryldevcmsWeb.Router
+           router: JeryldevcmsWeb.Router,
+           tailwind_config:
+             Path.join(Application.app_dir(:jeryldevcms, "priv"), "tailwind.config.bundle.js")
          ]
        ]}
     ]

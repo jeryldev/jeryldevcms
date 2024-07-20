@@ -102,10 +102,11 @@ defmodule Jeryldevcms.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind jeryldevcms", "esbuild jeryldevcms"],
+      "assets.build": ["tailwind jeryldevcms", "esbuild jeryldevcms", "esbuild tailwind_bundle"],
       "assets.deploy": [
         "tailwind jeryldevcms --minify",
         "esbuild jeryldevcms --minify",
+        "esbuild tailwind_bundle",
         "phx.digest"
       ],
       localci: [

@@ -26,6 +26,7 @@ config :jeryldevcms, JeryldevcmsWeb.Endpoint,
   secret_key_base: "MNh5Xv6M3zOOXgi2rVRMB8oo9/7a3obK/MF0s694So0t7CXrGp1rQ8v7snV4iOvs",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:jeryldevcms, ~w(--sourcemap=inline --watch)]},
+    esbuild: {Esbuild, :install_and_run, [:tailwind_bundle, ~w(--watch)]},
     tailwind: {Tailwind, :install_and_run, [:jeryldevcms, ~w(--watch)]}
   ]
 
