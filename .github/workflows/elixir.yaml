@@ -167,6 +167,6 @@ jobs:
       - name: Check unused dependencies
         run: mix deps.unlock --check-unused
 
-      # Step: Run tests
-      - name: Run test
-        run: mix test
+      # Step: Execute tests using ExCoveralls
+      - name: Run ExCoveralls
+        run: mix coveralls
