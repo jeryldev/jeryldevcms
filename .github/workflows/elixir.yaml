@@ -116,6 +116,13 @@ jobs:
       - name: Check Credo
         run: mix credo --strict
 
+      # Step: Run Sobelow to check for the consistency of the code.
+      # Sobelow is a security-focused static analysis tool for Elixir & the Phoenix framework.
+      # For security researchers, it is a useful tool for getting a quick view of points-of-interest.
+      # For project maintainers, it can be used to prevent the introduction of a number of common vulnerabilities.
+      - name: Check Sobelow
+        run: mix sobelow -i Config.HTTPS
+
       # Step: Execute the tests.
       - name: Run tests
         run: mix test
