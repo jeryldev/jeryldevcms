@@ -14,7 +14,6 @@ on:
 # Sets the ENV `MIX_ENV` to `test` for running tests
 env:
   MIX_ENV: test
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
   contents: read
@@ -170,4 +169,4 @@ jobs:
 
       # Step: Execute tests using ExCoveralls
       - name: Run ExCoveralls GitHub
-        run: mix coveralls.github
+        run: mix coveralls
