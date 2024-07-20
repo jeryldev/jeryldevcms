@@ -23,12 +23,15 @@ jobs:
     # Set up a Postgres DB service. By default, Phoenix applications
     # use Postgres. This creates a database for running tests.
     # Additional services can be defined here if required.
+    # https://github.com/BeaconCMS/beacon/blob/main/.github/workflows/elixir.yml
     services:
       db:
         image: postgres:16.3
         ports: ["5432:5432"]
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: jeryldevcms_beacon_test
+          POSTGRES_PASSWORD: postgres,
+          POSTGRES_USER: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -100,6 +103,10 @@ jobs:
       - name: Install dependencies
         run: mix deps.get
 
+      # Step: Setup Tailwind
+      - name: Setup Tailwind
+        run: mix tailwind.install
+
       # Step: Compile the project treating any warnings as errors.
       # Customize this step if a different behavior is desired.
       - name: Compiles without warnings
@@ -129,9 +136,9 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           key: |
-            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            plt-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
           restore-keys: |
-            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            plt-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-
           path: |
             priv/plts
 
@@ -148,22 +155,12 @@ jobs:
         if: steps.plt_cache.outputs.cache-hit != 'true'
         with:
           key: |
-            plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+            plt-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
           path: |
             priv/plts
 
       - name: Run dialyzer
         run: mix dialyzer --format github
-
-      # Step: Setup Tailwind based from: https://github.com/BeaconCMS/beacon/blob/main/guides/tailwind-setup.md
-      - name: Setup Tailwind
-        run: mix run -e "IO.inspect Tailwind.bin_version()"
-
-      - name: Setup Esbuild
-        run: mix run -e "IO.inspect Tailwind.bin_version()"
-
-      - name: Setup Tailwind Plugins
-        run: npm install --prefix assets --include=dev @tailwindcss/forms
 
       # Step: Scan a project’s Mix dependencies for known Elixir security vulnerabilities
       - name: Run mix deps audit
@@ -179,4 +176,6 @@ jobs:
 
       # Step: Execute tests using ExCoveralls
       - name: Run ExCoveralls
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:${{job.services.db.ports[5432]}}/jeryldevcms_beacon_test
         run: mix coveralls
