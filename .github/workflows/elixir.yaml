@@ -30,8 +30,8 @@ jobs:
         ports: ["5432:5432"]
         env:
           POSTGRES_DB: jeryldevcms_beacon_test
-          POSTGRES_PASSWORD: postgres,
           POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
