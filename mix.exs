@@ -17,7 +17,7 @@ defmodule Jeryldevcms.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test,
         "coveralls.cobertura": :test,
-        "ghci.local": :test
+        localci: :test
       ],
       dialyzer: [
         ignore_warnings: "dialyzer.ignore-warnings",
@@ -108,7 +108,7 @@ defmodule Jeryldevcms.MixProject do
         "esbuild jeryldevcms --minify",
         "phx.digest"
       ],
-      "ghci.local": [
+      localci: [
         "compile --warnings-as-errors",
         "format --check-formatted",
         "credo --strict",
