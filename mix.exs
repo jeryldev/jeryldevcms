@@ -110,7 +110,7 @@ defmodule Jeryldevcms.MixProject do
         "format --check-formatted",
         "credo --strict",
         "sobelow -i Config.HTTPS",
-        "dialyzer --format github",
+        "dialyzer --format dialyzer",
         "coveralls"
       ]
     ]
