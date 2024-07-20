@@ -155,10 +155,6 @@ jobs:
       - name: Run dialyzer
         run: mix dialyzer --format github
 
-      # Step: Check test coverall using ExCoveralls
-      - name: Run ExCoveralls GitHub
-        run: mix coveralls.github
-
       # Step: Scan a project’s Mix dependencies for known Elixir security vulnerabilities
       - name: Run mix deps audit
         run: mix deps.audit
@@ -171,6 +167,6 @@ jobs:
       - name: Check unused dependencies
         run: mix deps.unlock --check-unused
 
-      # Step: Execute the tests.
-      - name: Run tests
-        run: mix test
+      # Step: Execute tests using ExCoveralls
+      - name: Run ExCoveralls GitHub
+        run: mix coveralls.github
