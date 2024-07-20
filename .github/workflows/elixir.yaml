@@ -111,6 +111,11 @@ jobs:
       - name: Check Formatting
         run: mix format --check-formatted
 
+      # Step: Run Credo to check for the consistency of the code.
+      # Credo is a static code analysis tool for the Elixir language with a focus on teaching and code consistency.
+      - name: Check Credo
+        run: mix credo --strict
+
       # Step: Execute the tests.
       - name: Run tests
         run: mix test
