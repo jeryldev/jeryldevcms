@@ -159,6 +159,18 @@ jobs:
       - name: Run ExCoveralls GitHub
         run: mix coveralls.github
 
+      # Step: Scan a project’s Mix dependencies for known Elixir security vulnerabilities
+      - name: Run mix deps audit
+        run: mix deps.audit
+
+      # Step: Show all Hex dependencies that have been marked as retired, which the package maintainers no longer recommended using.
+      - name: Run mix hex audit
+        run: mix hex.audit
+
+      # Step: Checks that the mix.lock file has no unused dependencie
+      - name: Check unused dependencies
+        run: mix deps.unlock --check-unused
+
       # Step: Execute the tests.
       - name: Run tests
         run: mix test
