@@ -18,8 +18,16 @@ defmodule Jeryldevcms.Application do
       # {Jeryldevcms.Worker, arg},
       # Start to serve requests, typically the last entry
       JeryldevcmsWeb.Endpoint,
-     {Beacon, sites: [[site: :jeryldev, repo: Jeryldevcms.Repo, endpoint: JeryldevcmsWeb.Endpoint, router: JeryldevcmsWeb.Router]]}
-]
+      {Beacon,
+       sites: [
+         [
+           site: :jeryldev,
+           repo: Jeryldevcms.Repo,
+           endpoint: JeryldevcmsWeb.Endpoint,
+           router: JeryldevcmsWeb.Router
+         ]
+       ]}
+    ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
