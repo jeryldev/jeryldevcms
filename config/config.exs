@@ -16,7 +16,7 @@ config :jeryldevcms, JeryldevcmsWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: JeryldevcmsWeb.ErrorHTML, json: JeryldevcmsWeb.ErrorJSON],
+    formats: [html: BeaconWeb.ErrorHTML, json: JeryldevcmsWeb.ErrorJSON],
     layout: false
   ],
   pubsub_server: Jeryldevcms.PubSub,
