@@ -16,7 +16,7 @@ config :jeryldevcms, JeryldevcmsWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: JeryldevcmsWeb.ErrorHTML, json: JeryldevcmsWeb.ErrorJSON],
+    formats: [html: BeaconWeb.ErrorHTML, json: JeryldevcmsWeb.ErrorJSON],
     layout: false
   ],
   pubsub_server: Jeryldevcms.PubSub,
@@ -37,6 +37,12 @@ config :esbuild,
   jeryldevcms: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ],
+  tailwind_bundle: [
+    args:
+      ~w(tailwind.config.js --bundle --platform=node --format=esm --target=es2020 --outfile=../priv/tailwind.config.bundle.js),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]

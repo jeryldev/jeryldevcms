@@ -17,7 +17,7 @@ defmodule Jeryldevcms.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test,
         "coveralls.cobertura": :test,
-        "ghci.local": :test
+        localci: :test
       ],
       dialyzer: [
         ignore_warnings: "dialyzer.ignore-warnings",
@@ -60,7 +60,7 @@ defmodule Jeryldevcms.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       # TODO bump on release to {:phoenix_live_view, "~> 1.0.0"},
       {:phoenix_live_view, "~> 1.0.0-rc.1", override: true},
-      {:floki, ">= 0.30.0", only: :test},
+      {:floki, ">= 0.30.0"},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
@@ -83,7 +83,9 @@ defmodule Jeryldevcms.MixProject do
       {:sobelow, "~> 0.13.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4.3", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.18.1", only: [:dev, :test], runtime: false},
-      {:mix_audit, "~> 2.1.4", only: [:dev, :test], runtime: false}
+      {:mix_audit, "~> 2.1.4", only: [:dev, :test], runtime: false},
+      {:beacon, github: "BeaconCMS/beacon", override: true},
+      {:beacon_live_admin, github: "BeaconCMS/beacon_live_admin"}
     ]
   end
 
@@ -100,13 +102,14 @@ defmodule Jeryldevcms.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind jeryldevcms", "esbuild jeryldevcms"],
+      "assets.build": ["tailwind jeryldevcms", "esbuild jeryldevcms", "esbuild tailwind_bundle"],
       "assets.deploy": [
         "tailwind jeryldevcms --minify",
         "esbuild jeryldevcms --minify",
+        "esbuild tailwind_bundle",
         "phx.digest"
       ],
-      "ghci.local": [
+      localci: [
         "compile --warnings-as-errors",
         "format --check-formatted",
         "credo --strict",

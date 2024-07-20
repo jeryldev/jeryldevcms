@@ -4,6 +4,7 @@
     "lib/jeryldevcms_web/components/core_components.ex",
     "lib/jeryldevcms_web/router.ex",
     "lib/jeryldevcms_web/telemetry.ex",
-    "test/support/data_case.ex"
+    "test/support/data_case.ex",
+    "lib/jeryldevcms_web/controllers/page_controller.ex"
   ]
 }

@@ -17,7 +17,18 @@ defmodule Jeryldevcms.Application do
       # Start a worker by calling: Jeryldevcms.Worker.start_link(arg)
       # {Jeryldevcms.Worker, arg},
       # Start to serve requests, typically the last entry
-      JeryldevcmsWeb.Endpoint
+      JeryldevcmsWeb.Endpoint,
+      {Beacon,
+       sites: [
+         [
+           site: :jeryldev,
+           repo: Jeryldevcms.Repo,
+           endpoint: JeryldevcmsWeb.Endpoint,
+           router: JeryldevcmsWeb.Router,
+           tailwind_config:
+             Path.join(Application.app_dir(:jeryldevcms, "priv"), "tailwind.config.bundle.js")
+         ]
+       ]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
