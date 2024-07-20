@@ -155,6 +155,16 @@ jobs:
       - name: Run dialyzer
         run: mix dialyzer --format github
 
+      # Step: Setup Tailwind based from: https://github.com/BeaconCMS/beacon/blob/main/guides/tailwind-setup.md
+      - name: Setup Tailwind
+        run: mix run -e "IO.inspect Tailwind.bin_version()"
+
+      - name: Setup Esbuild
+        run: mix run -e "IO.inspect Tailwind.bin_version()"
+
+      - name: Setup Tailwind Plugins
+        run: npm install --prefix assets --include=dev @tailwindcss/forms
+
       # Step: Scan a project’s Mix dependencies for known Elixir security vulnerabilities
       - name: Run mix deps audit
         run: mix deps.audit
