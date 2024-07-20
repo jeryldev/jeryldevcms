@@ -139,7 +139,7 @@ jobs:
       - name: Create PLTs
         if: steps.plt_cache.outputs.cache-hit != 'true'
         run: mix dialyzer --plt
-        
+
       # By default, the GitHub Cache action will only save the cache if all steps in the job succeed,
       # so we separate the cache restore and save steps in case running dialyzer fails.
       - name: Save PLT cache
@@ -154,6 +154,10 @@ jobs:
 
       - name: Run dialyzer
         run: mix dialyzer --format github
+
+      # Step: Check test coverall using ExCoveralls
+      - name: Run ExCoveralls GitHub
+        run: mix coveralls.github
 
       # Step: Execute the tests.
       - name: Run tests

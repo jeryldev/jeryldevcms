@@ -9,7 +9,15 @@ defmodule Jeryldevcms.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        "coveralls.cobertura": :test
+      ]
     ]
   end
 
@@ -61,7 +69,8 @@ defmodule Jeryldevcms.MixProject do
       {:bandit, "~> 1.5"},
       {:credo, "~> 1.7.7", only: [:dev, :test], runtime: false},
       {:sobelow, "~> 0.13.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.4.3", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 1.4.3", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.18.1", only: :test}
     ]
   end
 
